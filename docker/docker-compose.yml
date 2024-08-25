@@ -1,0 +1,17 @@
+services:
+  mysql:
+    container_name: 'mysql-petize'
+    image: 'mysql:latest'
+    environment:
+      - 'MYSQL_DATABASE=petizedb'
+      - 'MYSQL_PASSWORD=123'
+      - 'MYSQL_ROOT_PASSWORD=123'
+      - 'MYSQL_USER=admin'
+    ports:
+      - '3306:3306'
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
