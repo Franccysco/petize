@@ -182,7 +182,7 @@ $ http GET :8080/orders
 ]
 ```
 
-- Listar Produtos por ID
+- Listar Pedidos por ID
 ```
 $ http GET :8080/orders/2
 
