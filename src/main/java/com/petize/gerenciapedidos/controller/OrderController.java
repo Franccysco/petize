@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/orders")
@@ -38,8 +39,9 @@ public class OrderController {
     }
 
     @PatchMapping("/{id}/status")
-    public ResponseEntity<Order> updateStatus(@PathVariable Long id, @RequestBody String status){
-        return ResponseEntity.ok(this.orderService.updateStatus(id,status));
+    public ResponseEntity<Order> updateStatus(@PathVariable Long id, @RequestBody Map<String, String> status){
+        String newStatus = status.get("status");
+        return ResponseEntity.ok(this.orderService.updateStatus(id,newStatus));
     }
 
 }
