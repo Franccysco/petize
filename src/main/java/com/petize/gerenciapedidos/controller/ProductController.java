@@ -1,6 +1,6 @@
 package com.petize.gerenciapedidos.controller;
 
-import com.petize.gerenciapedidos.controller.dto.ProductDto;
+import com.petize.gerenciapedidos.controller.dto.ProductDTO;
 import com.petize.gerenciapedidos.model.Product;
 import com.petize.gerenciapedidos.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +27,12 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Product> createProduct(@RequestBody ProductDto productDto){
+    public ResponseEntity<Product> createProduct(@RequestBody ProductDTO productDto){
         return ResponseEntity.ok(this.productService.createProduct(productDto));
     }
 
-    @PostMapping("/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody ProductDto productDto){
+    @PutMapping("/{id}")
+    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody ProductDTO productDto){
         return ResponseEntity.ok(this.productService.updateProduct(id, productDto));
     }
 
