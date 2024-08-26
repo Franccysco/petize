@@ -7,6 +7,7 @@ import com.petize.gerenciapedidos.model.Order;
 import com.petize.gerenciapedidos.model.Product;
 import com.petize.gerenciapedidos.repository.OrderRepository;
 import com.petize.gerenciapedidos.repository.ProductRepository;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,8 @@ public class OrderService {
     private OrderRepository orderRepository;
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     public List<Order> getAllOrders() {
         return this.orderRepository.findAll();
@@ -60,6 +63,10 @@ public class OrderService {
     public Order updateStatus(Long id, String status) {
         Order order = this.orderRepository.findById(id).orElseThrow(() -> new RuntimeException("Order not found"));
         order.setStatus(OrderStatus.valueOf(status));
-        return this.orderRepository.save(order);
+        this.orderRepository.save(order);
+        this.rabbitTemplate.convertAndSend("order-exchange", "order.status." + id,
+                Map.of("orderId", id.toString(), "status", status));
+
+        return order;
     }
 }
