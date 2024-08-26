@@ -215,7 +215,7 @@ $ http PUT :8080/orders/2 "orderDate": "2023-08-20" "products": [ { "productId":
 
 - Atualizar Status Pedido
 ```
-$ http PATCH :8080/orders/2
+$ http PATCH :8080/orders/2 status{PENDING, PROCESSING, COMPLETED}
 PENDING
 ```
 
