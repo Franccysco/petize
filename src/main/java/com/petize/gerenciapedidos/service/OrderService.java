@@ -2,6 +2,7 @@ package com.petize.gerenciapedidos.service;
 
 import com.petize.gerenciapedidos.controller.dto.OrderDTO;
 import com.petize.gerenciapedidos.controller.dto.OrderProductDTO;
+import com.petize.gerenciapedidos.enums.OrderStatus;
 import com.petize.gerenciapedidos.model.Order;
 import com.petize.gerenciapedidos.model.Product;
 import com.petize.gerenciapedidos.repository.OrderRepository;
@@ -56,4 +57,9 @@ public class OrderService {
         return this.orderRepository.save(order);
     }
 
+    public Order updateStatus(Long id, String status) {
+        Order order = this.orderRepository.findById(id).orElseThrow(() -> new RuntimeException("Order not found"));
+        order.setStatus(OrderStatus.valueOf(status));
+        return this.orderRepository.save(order);
+    }
 }
