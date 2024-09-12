@@ -63,7 +63,6 @@ public class OrderService {
     public Order updateStatus(Long id, String status) {
         Order order = this.orderRepository.findById(id).orElseThrow(() -> new RuntimeException("Order not found"));
         order.setStatus(OrderStatus.valueOf(status));
-        this.orderRepository.save(order);
         this.rabbitTemplate.convertAndSend("order-exchange", "order.status." + id,
                 Map.of("orderId", id.toString(), "status", status));
 
